@@ -1,0 +1,114 @@
+package model;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+public class chart_detail implements Jdbc
+{
+	Connection myconn=null;
+	Statement  st=null;
+	ArrayList<Object> dataTable=new ArrayList<Object>();
+	int i=0;
+	public chart_detail()
+	{}
+	public ArrayList<Object> view(String tkr)
+	{
+	  try
+	  {
+	       Class.forName("oracle.jdbc.driver.OracleDriver");
+	       myconn=DriverManager.getConnection(oraURL,uid,pwd);
+	       String query = "Select * from data_upload_table where ticker ="+tkr;
+	       
+	       st = myconn.createStatement();
+	       ResultSet rs = st.executeQuery(query);
+	       
+	       while(rs.next()){  
+	    	   Map<String,String> val = new HashMap<String,String>();
+	    	   String tick=rs.getString(1);
+	    	   String exch=rs.getString(2);
+	    	   String cmpny=rs.getString(3);
+	    	   String currency=rs.getString(4);
+	    	   String sec=rs.getString(5);
+	    	   String indust_gr=rs.getString(6);
+	    	   String indust_sec=rs.getString(7);
+	    	   String id_isin=rs.getString(8);
+	    	   String dvd_sh_12m=rs.getString(9);
+	    	   String dev_freq=rs.getString(10);
+	    	   String trade_lot_size=rs.getString(11);
+	    	   String market_sector_des=rs.getString(12);
+	    	   String share_out_real=rs.getString(13)+"";
+	    	   String high_52week=rs.getString(14)+"";
+	    	   String low_52week=rs.getString(15)+"";
+	    	   String high_dt_52week=rs.getString(16)+"";
+	    	   String low_dt_52week=rs.getString(17)+"";
+	    	   String share_per_indiv=rs.getString(18)+"";
+	    	   String px_vol=rs.getString(19)+"";
+	    	   String eqy_beta=rs.getString(20)+"";
+	    	   String upload_data=rs.getString(21);
+	    	     val.put("tick",tick);
+	    	     val.put("exch",exch);
+	    	     val.put("cmpny",cmpny);
+	    	     val.put("currency",currency);
+	    	     val.put("sec",sec);
+	    	     val.put("indust_gr",indust_gr);
+	    	     val.put("indust_sec",indust_sec);
+	    	     val.put("id_isin",id_isin);
+	    	     val.put("dvd_sh_12m",dvd_sh_12m);
+	    	     val.put("dev_freq",dev_freq);
+	    	     val.put("trade_lot_size",trade_lot_size);
+	    	     val.put("market_sector_des",market_sector_des);
+	    	     val.put("share_out_real",share_out_real);
+	    	     val.put("high_52week",high_52week);
+	    	     val.put("low_52week",low_52week);
+	    	     val.put("high_dt_52week",high_dt_52week);
+	    	     val.put("low_dt_52week",low_dt_52week);
+	    	     val.put("share_per_indiv",share_per_indiv);
+	    	     val.put("px_vol",px_vol);
+	    	     val.put("eqy_beta",eqy_beta);
+	    	     val.put("upload_data",upload_data);
+	    	     dataTable.add(i,val);
+	    	     i++;
+	    	    
+	       }
+	      
+
+	       
+	     rs.close();
+         st.close();
+         myconn.close();
+         
+	  }
+     catch(SQLException se)
+     {
+      se.printStackTrace();
+     }
+     catch(Exception e)
+     {
+      e.printStackTrace();
+     }
+     finally
+     {
+       try{
+        if(st!=null)
+           st.close();
+         }
+       catch(SQLException se2)
+         {
+    	   
+         } 
+       try{
+        if(myconn!=null)
+           myconn.close();
+          }
+       catch(SQLException se)
+          {
+        se.printStackTrace();
+          }
+      }
+	  return dataTable;
+	 
+  }
+	
+	
+}
