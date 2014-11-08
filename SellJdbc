@@ -1,0 +1,45 @@
+package controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import model.JdbcSell;
+
+public class SellJdbc extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{  
+		
+		PrintWriter out = response.getWriter();
+		int i;
+		JdbcSell by=new JdbcSell();
+		
+		i=by.buy("121",(String)request.getParameter("ticker"),(String)request.getParameter("name"),(String)request.getParameter("shareprice"),(String)request.getParameter("qty"),(String)request.getParameter("total"),(String)request.getParameter("brok"));
+	    
+		if(i==1)
+		{
+			//out.println("Successfully Updated !!!");
+			request.setAttribute("resultStatus", i);
+			RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/views/userbuysell.jsp");  
+	    	  rd.include(request,response); 
+		}
+		else if(i==0)
+		{
+			//out.println("Update Failed !!!");
+			request.setAttribute("resultStatus", i);
+			RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/views/userbuysell.jsp");  
+	    	  rd.include(request,response);
+		}
+		else
+			out.println("Internal error !!!");
+	}
+
+}
