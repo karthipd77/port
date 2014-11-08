@@ -1,0 +1,80 @@
+package model;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+public class JdbcData implements Jdbc
+{
+	Connection myconn=null;
+	Statement  st=null;
+	ArrayList<Object> companyTable=new ArrayList<Object>();
+	int i=0;
+	public ArrayList<Object> view()
+	{
+	  try
+	  {
+	       Class.forName("oracle.jdbc.driver.OracleDriver");
+	       myconn=DriverManager.getConnection(oraURL,uid,pwd);
+	       String query = "Select * from company_details_table";
+	       
+	       st = myconn.createStatement();
+	       ResultSet rs = st.executeQuery(query);
+	       
+	       while(rs.next()){  
+	    	   Map<String,String> val = new HashMap<String,String>();
+	    	   String tick=rs.getString(1);
+	    	   String cmpny=rs.getString(2);
+	    	   String last_holdprice=rs.getString(3)+"";
+	    	   String current_price=rs.getString(4)+"";
+	    	  System.out.println(tick+"   "+cmpny+"   "+current_price);
+	    	     val.put("tick",tick);
+	    	     val.put("cmpny",cmpny);
+	    	     val.put("last_holdprice",last_holdprice);
+	    	     val.put("current_price",current_price);
+	    	     
+	    	     companyTable.add(i,val);
+	    	     i++;
+	    	    
+	       }
+	      
+
+	       
+	     rs.close();
+         st.close();
+         myconn.close();
+         
+	  }
+     catch(SQLException se)
+     {
+      se.printStackTrace();
+     }
+     catch(Exception e)
+     {
+      e.printStackTrace();
+     }
+     finally
+     {
+       try{
+        if(st!=null)
+           st.close();
+         }
+       catch(SQLException se2)
+         {
+    	   
+         } 
+       try{
+        if(myconn!=null)
+           myconn.close();
+          }
+       catch(SQLException se)
+          {
+        se.printStackTrace();
+          }
+      }
+	  return companyTable;
+	 
+  }
+	
+	
+}
