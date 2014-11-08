@@ -1,0 +1,89 @@
+package controller;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+import java.sql.*;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+
+
+
+public class register extends HttpServlet implements connection {
+	private static final long serialVersionUID = 1L;
+
+	Connection myconn;
+	static final String oraDriver="oracle.jdbc.driver.OracleDriver";
+	static final String conURL="jdbc:oracle:thin:";
+	static final String host="";
+	static final String port="1521";
+	static final String instance="INATP02";
+	static final String uid="shobana";
+	static final String pwd="shobana";
+	static final String oraURL=conURL+"@"+host+":"+port+":"+instance;
+    
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws IOException{
+        response.setContentType("text/html");
+    	PrintWriter out = response.getWriter();
+    	out.println("<html><head>");
+    try
+    {
+    	
+    	Connection myconn;
+          Class.forName("oracle.jdbc.driver.OracleDriver");
+          myconn=DriverManager.getConnection(oraURL,uid,pwd);
+          Statement stmt = myconn.createStatement();
+          
+          int id =0;
+          
+          String username = request.getParameter("username");
+          String password = request.getParameter("password");
+          String commitid = request.getParameter("commitid");
+          String emailid = request.getParameter("mailid");
+          String dob = request.getParameter("dob");
+          String adds = request.getParameter("adds");
+           
+          String query1 = "SELECT COUNT(*) FROM USER_TABLE";
+			stmt = myconn.createStatement();
+			ResultSet rs = stmt.executeQuery(query1);
+			while(rs.next())
+			{
+				 id = Integer.parseInt(rs.getString(1)) + 1;
+			}
+		  String sid =  Integer.toString(id);
+          System.out.println(sid);
+          String query = "insert into user_table values('"+sid+"','"+username+"','"+password+"','"+emailid+"','"+commitid+"','"+dob+"','"+adds+"','"+0+"')";
+          
+ System.out.println(query);
+          stmt.executeUpdate(query);
+         String message = "sucessfully register";
+          request.getSession().setAttribute("message", message);
+          response.sendRedirect("register.jsp");
+          
+    }
+    catch(Exception e)
+    {
+          	  
+          System.out.println(e);
+    }
+    
+    
+    }
+
+}
