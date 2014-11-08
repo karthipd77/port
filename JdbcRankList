@@ -1,0 +1,83 @@
+package model;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+public class JdbcRankList implements Jdbc
+{
+	Connection myconn=null;
+	Statement  st=null;
+	ArrayList<Object> rankTable=new ArrayList<Object>();
+	int i=0;
+	int rank=1;
+	public ArrayList<Object> view()
+	{
+	  try
+	  {
+	       Class.forName("oracle.jdbc.driver.OracleDriver");
+	       myconn=DriverManager.getConnection(oraURL,uid,pwd);
+	       String query = "select p.user_id,p.holding_value,u.username from portfolio_table_sar p,user_table_sar u where u.user_id in(select p.user_id from portfolio_table_sar) order by (p.holding_value+p.cash_balance) desc";
+
+            st = myconn.createStatement();
+	       ResultSet rs = st.executeQuery(query);
+	       
+	       while(rs.next()){  
+	    	   Map<String,String> val = new HashMap<String,String>();
+	    	   
+	    	   String uid=rs.getString(1)+"";
+	    	   String holding_value=rs.getString(2)+"";
+	    	   String uname=rs.getString(3);
+	    	   String rankStr=rank+"";
+	    	     val.put("uid",uid);
+	    	     val.put("holding_value",holding_value);
+	    	     val.put("uname", uname);
+	    	     val.put("rank",rankStr);
+	    	     rank++;
+	    	    
+	    	     
+	    	     rankTable.add(i,val);
+	    	     i++;
+	    	    
+	       }
+	      
+
+	       
+	     rs.close();
+         st.close();
+         myconn.close();
+         
+	  }
+     catch(SQLException se)
+     {
+      se.printStackTrace();
+     }
+     catch(Exception e)
+     {
+      e.printStackTrace();
+     }
+     finally
+     {
+       try{
+        if(st!=null)
+           st.close();
+         }
+       catch(SQLException se2)
+         {
+    	   
+         } 
+       try{
+        if(myconn!=null)
+           myconn.close();
+          }
+       catch(SQLException se)
+          {
+        se.printStackTrace();
+          }
+      }
+	  return rankTable;
+	 
+  }
+	
+	
+}
