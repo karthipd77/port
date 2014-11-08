@@ -1,0 +1,70 @@
+package model;  
+import java.sql.*;
+
+
+
+public class JdbcSell implements Jdbc 
+{
+	Connection myconn=null;
+	PreparedStatement  st=null;
+public int buy(String id,String tick,String cname,String sp,String qty,String tot,String brok)
+{
+	int rows=0;
+	try
+	  {
+		
+		
+	       Class.forName("oracle.jdbc.driver.OracleDriver");
+	       myconn=DriverManager.getConnection(oraURL,uid,pwd);
+
+	      String Query=  "insert into sell_history_table1 values(?,?,?,?,?,?,?)";
+	      
+	      
+	       st =myconn.prepareStatement(Query);
+st.setInt(1,Integer.parseInt(id) );
+st.setString(2,tick );
+st.setString(3,cname );
+st.setFloat(4,Float.parseFloat(sp) );
+st.setInt(5,Integer.parseInt(qty) );
+st.setFloat(6,Float.parseFloat(tot) );
+st.setInt(7,Integer.parseInt(brok) );
+
+rows= st.executeUpdate();
+st.close();
+myconn.close();
+
+}
+catch(SQLException se)
+{
+se.printStackTrace();
+}
+catch(Exception e)
+{
+e.printStackTrace();
+}
+finally
+{
+try{
+if(st!=null)
+  st.close();
+}
+catch(SQLException se2)
+{
+  
+} 
+try{
+if(myconn!=null)
+  myconn.close();
+ }
+catch(SQLException se)
+ {
+se.printStackTrace();
+ }
+}
+
+return rows;
+
+}
+
+
+}
