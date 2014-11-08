@@ -35,7 +35,7 @@ public class login extends HttpServlet implements connection {
 	Connection myconn;
 	static final String oraDriver="oracle.jdbc.driver.OracleDriver";
 	static final String conURL="jdbc:oracle:thin:";
-	static final String host="10.232.71.29";
+	static final String host="";
 	static final String port="1521";
 	static final String instance="INATP02";
 	static final String uid="shobana";
