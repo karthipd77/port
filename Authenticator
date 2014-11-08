@@ -1,0 +1,13 @@
+package model;
+
+public class Authenticator {
+	public String authenticate(String username, String password) {
+        if (("karthi".equalsIgnoreCase(username))
+                && ("pass".equals(password))) {
+            return "success";
+        } else {
+            return "failure";
+        }
+    }
+
+}
