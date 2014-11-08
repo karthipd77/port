@@ -1,0 +1,114 @@
+package model;  
+ 
+import java.sql.*; 
+import java.util.ArrayList; 
+import java.util.List; 
+import oracle.jdbc.driver.OracleDriver;
+public class PortfolioBean
+{
+     
+	   static final String conURL="jdbc:oracle:thin:";
+	   static final String host="";
+	   static final String port="1521";
+	   static final String instance="INATP02";
+	   static final String oraURL=conURL+"@"+host+":"+port+":"+instance;
+	   
+
+	  
+	   static final String USER = "shobana";
+	   static final String PASS = "shobana";
+
+    String error;
+    List<Object> allData=new ArrayList<Object>();
+     
+    public String cname,ticker;
+    public int quantity;
+    public float value,current_price,ltp,change,per;
+    Object obj=new Object();
+ 
+    public void setObj(Object obj) {
+        this.obj = obj;
+    }
+    public String getError() {
+        return error;
+    }
+    public List getDb_Data()
+    {
+        int i=0;
+        try
+        {
+                String qry,qry2,tick;
+                Class.forName("oracle.jdbc.driver.OracleDriver");
+                Connection con = DriverManager.getConnection(oraURL, USER, PASS);
+                Statement s = con.createStatement(),s1 = con.createStatement();               
+               qry = "Select * from current_holdings_table";
+              
+                ResultSet r=s.executeQuery(qry);
+                while(r.next())
+                {
+                    float l,c,ch,p= 0; 
+                
+                    tick=r.getString(2);
+                    qry2 = "Select * from company_details_table where TICKER='"+tick+"'";
+                    ResultSet r1=s1.executeQuery(qry2);
+                    r1.next();
+                    l=r1.getFloat(3);
+                    c=r1.getFloat(4);
+                   
+                    ch=c-l; 
+                    p=((ch*100)/l);
+                    DataFields d=new DataFields(r.getString(2), r.getString(3), r.getInt(5),r.getFloat(6),l,c,ch,p); 
+                    allData.add(i,d);
+                    i++;
+                }
+                 
+        }
+        catch(Exception ex)
+        {
+                error="<b>Contact Administrator :</b><br/>" + ex; 
+                System.out.println("Your query is not working" + ex);
+        }
+       return allData;
+    }
+   
+          
+
+          public String getcname() { cname = ((DataFields)obj).cname; return cname; }  
+
+          public String getticker() { ticker = ((DataFields)obj).ticker; return ticker; }   
+
+          public int getquantity() { quantity = ((DataFields)obj).quantity; return quantity; }   
+          
+          public Float getvalue() { value = ((DataFields)obj).value; return value; }   
+          
+          public Float getcp() { current_price = ((DataFields)obj).current_price; return current_price; } 
+          
+          public Float getltp() { ltp = ((DataFields)obj).ltp; return ltp; }   
+          
+          public Float getchange() {change = ((DataFields)obj).change; return change; }  
+          
+          public Float getper() { per = ((DataFields)obj).per; return per; }  
+    }
+ 
+    class DataFields
+    {
+        public String cname,ticker;
+       public int quantity;
+       public float value,current_price,ltp,change,per;
+ 
+        public DataFields(String  ticker,String  cname,int quantity,float value,float current_price,float ltp,float change,float per)
+        {
+            
+            this.cname=cname;
+           
+            this.ticker=ticker;
+            this.quantity=quantity;
+            this.value=value;
+            this.current_price=current_price;
+            this.ltp=ltp;
+            this.change=change;
+            this.per=per;
+        }
+    }
+    
+
