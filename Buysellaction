@@ -1,0 +1,47 @@
+package controller;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+public class Buysellaction extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+    
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
+		if (request.getParameter("SELL") != null)
+		{
+		
+			request.setAttribute("id", request.getParameter("id"));
+			request.setAttribute("ticker", request.getParameter("ticker"));
+			request.setAttribute("cname", request.getParameter("cname"));
+			request.setAttribute("sprice", request.getParameter("shareprice"));
+			request.setAttribute("qty", request.getParameter("qty"));
+			request.setAttribute("total", request.getParameter("total"));
+			request.setAttribute("brokerage", request.getParameter("brok"));
+			System.out.println(request.getParameter("ticker"));
+		    RequestDispatcher rd = request.getRequestDispatcher("/SellJdbc");  
+		    rd.forward(request, response);
+		}
+		if (request.getParameter("BUY") != null)
+		{
+		
+			request.setAttribute("id", request.getParameter("id"));
+			request.setAttribute("ticker", request.getParameter("ticker"));
+			request.setAttribute("cname", request.getParameter("cname"));
+			request.setAttribute("sprice", request.getParameter("shareprice"));
+			request.setAttribute("qty", request.getParameter("qty"));
+			request.setAttribute("total", request.getParameter("total"));
+			request.setAttribute("brokerage", request.getParameter("brok"));
+		    RequestDispatcher rd = request.getRequestDispatcher("/BuyJdbc");  
+		    rd.forward(request, response);
+		}
+	}
+
+}
