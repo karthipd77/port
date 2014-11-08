@@ -1,0 +1,37 @@
+package controller;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import model.JdbcGainer;
+import model.JdbcLoser;
+import model.JdbcRankList;
+public class GainerLoserController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
+		ArrayList<Object> performdata=new ArrayList<Object>();
+		ArrayList<Object> performdata1=new ArrayList<Object>();
+		JdbcGainer vw=new JdbcGainer();
+		performdata=(ArrayList<Object>) vw.view();
+		JdbcLoser vw1=new JdbcLoser();
+		performdata1=(ArrayList<Object>) vw1.view();
+		request.setAttribute("performTable", performdata);
+		request.setAttribute("performTable1", performdata1);
+		ArrayList<Object> rankdata=new ArrayList<Object>();
+		JdbcRankList vw2=new JdbcRankList();
+		rankdata=(ArrayList<Object>) vw2.view();
+		request.setAttribute("RankTable", rankdata);
+		RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/views/user_home.jsp");  
+        rd.forward(request, response);  
+	}
+
+}
