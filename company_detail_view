@@ -1,0 +1,421 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"  %>
+    <%@ page import="java.util.*" %>
+<%@ page import="model.*" %>
+
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    
+    
+    
+    
+    
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+	
+	<meta charset="utf-8">
+	<title> COMPANY DETAIL </title>
+
+	<!-- The styles -->
+	<link id="bs-css" href="css/bootstrap-cerulean.css" rel="stylesheet">
+	<style type="text/css">
+	  body {
+		padding-bottom: 40px;
+	  }
+	  .sidebar-nav {
+		padding: 9px 0;
+	  }
+	</style>
+	
+	
+	<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;    
+}
+</style>
+	
+	
+	 <script type="text/javascript" src="https://www.google.com/jsapi"></script>  
+  <script type="text/javascript">    
+  google.load("visualization", "1", {packages:["corechart"]});   
+  google.setOnLoadCallback(drawChart);   
+  function drawChart() {   
+  var share_price = [4000, 3000, 2450,1111];
+ 
+  var data = new google.visualization.DataTable();
+
+    data.addColumn('string', 'date'); 
+// Implicit domain label col.
+data.addColumn('number', 'stock price');
+ // Implicit series 1 data col.
+ data.addColumn({type:'number', role:'interval'});
+ // interval role col.
+ data.addColumn({type:'number', role:'interval'}); 
+ //tooltip
+ data.addColumn({type:'string', role:'tooltip'}); 
+ // interval role col.
+ data.addColumn({type:'string', role:'annotation'});
+ // annotation role col.
+ data.addColumn({type:'string', role:'annotationText'});
+ // annotationText col.
+ data.addColumn({type:'boolean',role:'certainty'});
+ // certainty col.
+ data.addRows([   
+ ['22-11-2004',share_price[0],  3800, 4200,share_price[0]+' is high',  'A','stock price '+share_price[0], true],
+ ['11-10-2005', share_price[1], 2800, 3200,share_price[1]+' is high',  'B','stock price '+share_price[1], true],
+ ['10-11-2006',  share_price[2],  2050,  2800, share_price[2]+' is high', 'C','stock price '+share_price[2], true],   
+ ['10-10-2007', share_price[3], null,null, null, null, null, false]]);  
+
+ 
+  var options = {        
+  title: 'Company Stock Price' ,
+ 'width':550,             
+  'height':370,
+  
+  chartArea: {width: '70%', height: '70%'},
+   curveType: 'function',
+legend: {position: 'in'},
+
+titlePosition: 'out', axisTitlesPosition: 'out',
+hAxis: {textPosition: 'out'}, vAxis: {textPosition: 'out'},
+
+ annotations: {   
+ boxStyle: {    
+ stroke: '#888',      
+ // Color of the box outline.    
+ strokeWidth: 1,     
+ // Thickness of the box outline.  
+ rx: 10,              
+ // x-radius of the corner curvature.    
+ ry: 10,               
+ // y-radius of the corner curvature.   
+ gradient: {           
+ // Attributes for linear gradient fill.     
+ color1: '#fbf6a7',  
+ // Start color for gradient.      
+ color2: '#33b679',    
+ // Finish color for gradient.     
+ x1: '0%', y1: '0%', 
+ // Where on the boundary to start and end the 
+ x2: '100%', y2: '100%',
+ // color1/color2 gradient, relative to the   
+ // upper left corner of the boundary.     
+ useObjectBoundingBoxUnits: true
+ // If true, the boundary for x1, y1,                
+ // x2, and y2 is the box. If false,               
+ // it's the entire chart.     
+ }    }  }
+   
+	
+ };  
+
+ 
+  
+  var chart = new google.visualization.LineChart(document.getElementById('chart_div')); 
+  chart.draw(data, options);      } 
+  </script>
+	
+	
+	
+	<link href="css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="css/charisma-app.css" rel="stylesheet">
+	<link href="css/jquery-ui-1.8.21.custom.css" rel="stylesheet">
+	<link href='css/fullcalendar.css' rel='stylesheet'>
+	<link href='css/fullcalendar.print.css' rel='stylesheet'  media='print'>
+	<link href='css/chosen.css' rel='stylesheet'>
+	<link href='css/uniform.default.css' rel='stylesheet'>
+	<link href='css/colorbox.css' rel='stylesheet'>
+	<link href='css/jquery.cleditor.css' rel='stylesheet'>
+	<link href='css/jquery.noty.css' rel='stylesheet'>
+	<link href='css/noty_theme_default.css' rel='stylesheet'>
+	<link href='css/elfinder.min.css' rel='stylesheet'>
+	<link href='css/elfinder.theme.css' rel='stylesheet'>
+	<link href='css/jquery.iphone.toggle.css' rel='stylesheet'>
+	<link href='css/opa-icons.css' rel='stylesheet'>
+	<link href='css/uploadify.css' rel='stylesheet'>
+
+
+	<!-- The fav icon -->
+	<link rel="shortcut icon" href="img/favicon.ico">
+		
+</head>
+
+<body>
+		<!-- topbar starts -->
+	<div class="navbar">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".top-nav.nav-collapse,.sidebar-nav.nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</a>
+				<a class="brand" href="index.html"> <img alt="Charisma Logo" src="img/logo20.png" /> <span>Charisma</span></a>
+				
+				<!-- theme selector starts -->
+				<div class="btn-group pull-right theme-container" >
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+						<i class="icon-tint"></i><span class="hidden-phone"> Change Theme / Skin</span>
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" id="themes">
+						<li><a data-value="classic" href="#"><i class="icon-blank"></i> Classic</a></li>
+						<li><a data-value="cerulean" href="#"><i class="icon-blank"></i> Cerulean</a></li>
+						<li><a data-value="cyborg" href="#"><i class="icon-blank"></i> Cyborg</a></li>
+						<li><a data-value="redy" href="#"><i class="icon-blank"></i> Redy</a></li>
+						<li><a data-value="journal" href="#"><i class="icon-blank"></i> Journal</a></li>
+						<li><a data-value="simplex" href="#"><i class="icon-blank"></i> Simplex</a></li>
+						<li><a data-value="slate" href="#"><i class="icon-blank"></i> Slate</a></li>
+						<li><a data-value="spacelab" href="#"><i class="icon-blank"></i> Spacelab</a></li>
+						<li><a data-value="united" href="#"><i class="icon-blank"></i> United</a></li>
+					</ul>
+				</div>
+				<!-- theme selector ends -->
+				
+				<!-- user dropdown starts -->
+				<div class="btn-group pull-right" >
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+						<i class="icon-user"></i><span class="hidden-phone"> admin</span>
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="#">Profile</a></li>
+						<li class="divider"></li>
+						<li><a href="login.html">Logout</a></li>
+					</ul>
+				</div>
+				<!-- user dropdown ends -->
+				
+				
+			</div>
+		</div>
+	</div>
+	<!-- topbar ends -->
+		<div class="container-fluid">
+		<div class="row-fluid">
+				
+			<!-- left menu starts -->
+			<div class="span2 main-menu-span">
+				<div class="well nav-collapse sidebar-nav">
+					<ul class="nav nav-tabs nav-stacked main-menu">
+						<li class="nav-header hidden-tablet">Main</li>
+						<li><a class="ajax-link" href="dashboard.html"><i class="icon-home"></i><span class="hidden-tablet"> Admin Dashboard</span></a></li>
+							<li><a class="ajax-link" href="adminportfolioview.html"><i class="icon-home"></i><span class="hidden-tablet"> User Details</span></a></li>
+						<li><a class="ajax-link" href="portfolioadminview.html"><i class="icon-eye-open"></i><span class="hidden-tablet"> User PoroFolio </span></a></li>
+						
+				</div><!--/.well -->
+			</div><!--/span-->
+			<!-- left menu ends -->
+			
+			<noscript>
+				<div class="alert alert-block span10">
+					<h4 class="alert-heading">Warning!</h4>
+					<p>You need to have <a href="http://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a> enabled to use this site.</p>
+				</div>
+			</noscript>
+			
+			<div id="content" class="span10">
+			<!-- content starts -->
+			
+			
+			<div class="row-fluid sortable">		
+				<div class="box span12">
+					<div class="box-header well" data-original-title>
+						<h2><i class="icon-user"></i> COMPANY DETAILS </h2>
+						
+					</div>
+					<div class="box-content">
+									
+				<div id="content" class="span6">
+			<!-- content starts -->
+			<div id="chart_div" style="width:700px;height:400px;"></div>
+					</div>
+				
+				<div class="span4">
+					
+<table style="width:70%">
+					<c:forEach  items="${DataTable}" var="item">
+					
+					
+					
+<tr><th>ticker:&nbsp</th>
+<td>&nbsp&nbsp ${item.tick}</td></tr>
+
+<tr><th>exch_code:&nbsp</th>
+<td>&nbsp&nbsp ${item.exch}</td></tr>
+
+<tr><th>cmpany_name:&nbsp</th>
+<td>&nbsp&nbsp${item.cmpny}</td></tr>
+
+<tr><th>currency:&nbsp</th>
+<td>&nbsp&nbsp${item.currency}</td></tr>
+
+<tr><th>security_type:&nbsp</th>
+<td>&nbsp&nbsp${item.sec}</td></tr>
+
+<tr><th>indust_gr:&nbsp</th>
+<td>&nbsp&nbsp${item.indust_gr}</td></tr>
+
+<tr><th>indust_sec:&nbsp</th>
+<td>&nbsp&nbsp${item.indust_sec}</td></tr>
+
+<tr><th>id_isin:&nbsp</th>
+<td>&nbsp&nbsp${item.id_isin}</td></tr>
+
+<tr><th>dvd_sh_12m:&nbsp</th>
+<td>&nbsp&nbsp${item.dvd_sh_12m}</td></tr>
+
+<tr><th>dev_freq:&nbsp</th>
+<td>&nbsp&nbsp${item.dev_freq}</td></tr>
+
+<tr><th>trade_lot_size:&nbsp</th>
+<td>&nbsp&nbsp${item.trade_lot_size}</td></tr>
+
+<tr><th>market_sector_des:&nbsp</th>
+<td>&nbsp&nbsp${item.market_sector_des}</td></tr>
+
+<tr><th>share_out_real:&nbsp</th>
+<td>&nbsp&nbsp${item.share_out_real}</td></tr>
+
+<tr><th>high_52week:&nbsp</th>
+<td>&nbsp&nbsp${item.high_52week}</td></tr>
+
+<tr><th>low_52week:&nbsp</th>
+<td>&nbsp&nbsp${item.low_52week}</td></tr>
+
+<tr><th>high_dt_52week:&nbsp</th>
+<td>&nbsp&nbsp${item.high_dt_52week}</td></tr>
+
+<tr><th>low_dt_52week:&nbsp</th>
+<td>&nbsp&nbsp${item.low_dt_52week}</td></tr>
+
+<tr><th>share_per_indiv:&nbsp</th>
+<td>&nbsp&nbsp${item.share_per_indiv}</td></tr>
+
+<tr><th>px_vol:&nbsp</th>
+<td>&nbsp&nbsp${item.px_vol}</td></tr>
+
+<tr><th>eqy_beta:&nbsp</th>
+<td>&nbsp&nbsp${item.eqy_beta}</td></tr>
+
+<tr><th>upload_data:&nbsp</th>
+<td>&nbsp&nbsp${item.upload_data}</td></tr>
+
+</c:forEach>
+
+</table>
+						
+				
+				</div>
+			
+												
+						
+					</div>
+				</div><!--/span-->
+			
+			</div><!--/row-->
+
+		
+				
+			
+    
+					<!-- content ends -->
+			</div><!--/#content.span10-->
+				</div><!--/fluid-row-->
+				
+		<hr>
+		
+		
+
+		
+		<footer>
+			<p class="pull-left">&copy; <a href="http:inautix.co.in" target="_blank">iNautix Technology</a></p>
+			<p class="pull-right">Powered by: <a href="http:inautix.co.in">o.s Batch 15 - 2014</a></p>
+		</footer>
+		
+	</div><!--/.fluid-container-->
+
+	<!-- external javascript
+	================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+
+	<!-- jQuery -->
+	<script src="js/jquery-1.7.2.min.js"></script>
+	<!-- jQuery UI -->
+	<script src="js/jquery-ui-1.8.21.custom.min.js"></script>
+	<!-- transition / effect library -->
+	<script src="js/bootstrap-transition.js"></script>
+	<!-- alert enhancer library -->
+	<script src="js/bootstrap-alert.js"></script>
+	<!-- modal / dialog library -->
+	<script src="js/bootstrap-modal.js"></script>
+	<!-- custom dropdown library -->
+	<script src="js/bootstrap-dropdown.js"></script>
+	<!-- scrolspy library -->
+	<script src="js/bootstrap-scrollspy.js"></script>
+	<!-- library for creating tabs -->
+	<script src="js/bootstrap-tab.js"></script>
+	<!-- library for advanced tooltip -->
+	<script src="js/bootstrap-tooltip.js"></script>
+	<!-- popover effect library -->
+	<script src="js/bootstrap-popover.js"></script>
+	<!-- button enhancer library -->
+	<script src="js/bootstrap-button.js"></script>
+	<!-- accordion library (optional, not used in demo) -->
+	<script src="js/bootstrap-collapse.js"></script>
+	<!-- carousel slideshow library (optional, not used in demo) -->
+	<script src="js/bootstrap-carousel.js"></script>
+	<!-- autocomplete library -->
+	<script src="js/bootstrap-typeahead.js"></script>
+	<!-- tour library -->
+	<script src="js/bootstrap-tour.js"></script>
+	<!-- library for cookie management -->
+	<script src="js/jquery.cookie.js"></script>
+	<!-- calander plugin -->
+	<script src='js/fullcalendar.min.js'></script>
+	<!-- data table plugin -->
+	<script src='js/jquery.dataTables.min.js'></script>
+
+	<!-- chart libraries start -->
+	<script src="js/excanvas.js"></script>
+	<script src="js/jquery.flot.min.js"></script>
+	<script src="js/jquery.flot.pie.min.js"></script>
+	<script src="js/jquery.flot.stack.js"></script>
+	<script src="js/jquery.flot.resize.min.js"></script>
+	<!-- chart libraries end -->
+
+	<!-- select or dropdown enhancer -->
+	<script src="js/jquery.chosen.min.js"></script>
+	<!-- checkbox, radio, and file input styler -->
+	<script src="js/jquery.uniform.min.js"></script>
+	<!-- plugin for gallery image view -->
+	<script src="js/jquery.colorbox.min.js"></script>
+	<!-- rich text editor library -->
+	<script src="js/jquery.cleditor.min.js"></script>
+	<!-- notification plugin -->
+	<script src="js/jquery.noty.js"></script>
+	<!-- file manager library -->
+	<script src="js/jquery.elfinder.min.js"></script>
+	<!-- star rating plugin -->
+	<script src="js/jquery.raty.min.js"></script>
+	<!-- for iOS style toggle switch -->
+	<script src="js/jquery.iphone.toggle.js"></script>
+	<!-- autogrowing textarea plugin -->
+	<script src="js/jquery.autogrow-textarea.js"></script>
+	<!-- multiple file upload plugin -->
+	<script src="js/jquery.uploadify-3.1.min.js"></script>
+	<!-- history.js for cross-browser state change on ajax -->
+	<script src="js/jquery.history.js"></script>
+	<!-- application script for Charisma demo -->
+	<script src="js/charisma.js"></script>
+	
+		
+</body>
+</html>
